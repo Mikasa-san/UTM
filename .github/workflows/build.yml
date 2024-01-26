@@ -136,7 +136,7 @@ jobs:
       - name: Pack Universal Sysroot
         if: steps.cache-sysroot-universal.outputs.cache-hit != 'true'
         run: |
-          ./scripts/pack_dependencies.sh . macos arm64 x86_64
+          ./scripts/pack_dependencies.sh . macos arm64
       - name: Compress Sysroot
         if: steps.cache-sysroot-universal.outputs.cache-hit != 'true' || github.event_name == 'release' || github.event.inputs.test_release == 'true'
         run: tar -acf sysroot.tgz sysroot-macOS-arm64_x86_64
@@ -215,7 +215,7 @@ jobs:
           [[ "$(xcode-select -p)" == "${{ env.BUILD_XCODE_PATH }}"* ]] || sudo xcode-select -s "${{ env.BUILD_XCODE_PATH }}"
       - name: Build UTM
         run: |
-          ./scripts/build_utm.sh -t "$SIGNING_TEAM_ID" -p macos -a "arm64 x86_64" -o UTM
+          ./scripts/build_utm.sh -t "$SIGNING_TEAM_ID" -p macos -a "arm64" -o UTM
           tar -acf UTM.xcarchive.tgz UTM.xcarchive
         env:
           SIGNING_TEAM_ID: ${{ vars.SIGNING_TEAM_ID }}
